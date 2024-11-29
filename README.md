@@ -1,1 +1,1 @@
-# Amply-Client
+# Amply
