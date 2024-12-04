@@ -1,5 +1,9 @@
 import React from 'react';
 
 export const Footer = () => {
-  return <div>Footer</div>;
+  return (
+    <footer>
+      <div className="container">Footer</div>
+    </footer>
+  );
 };

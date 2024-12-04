@@ -1,1 +1,10 @@
 @import './vendor/normalize.scss';
+
+@import './base/global.scss';
+
+@import './abstract/typography.scss';
+
+@import './components/header.scss';
+@import './components/footer.scss';
+
+@import './layout/layout.scss';
