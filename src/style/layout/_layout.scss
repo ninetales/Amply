@@ -2,7 +2,13 @@
     display: block;
     width: 100%;
     padding: 0 20px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

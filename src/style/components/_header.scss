@@ -1,12 +1,11 @@
 header {
     height: 70px;
-    border: 1px solid #eee;
-    background-color: #fff;
+    border: 1px solid var(--color-component-border);
+    background-color: var(--color-component);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 20px;
-    border-radius: 7px;
+    border-radius: 15px;
 
     .logo {
         font-size: 20px;
@@ -30,18 +29,27 @@ header {
                 display: flex;
                 align-items: center;
                 list-style: none;
-                border-left: 1px solid #eee;
+                border-left: 1px solid var(--color-navigation-separator);
                 padding: 0 15px;
 
                 >a,
                 >span,
                 >div {
-                    color: #333;
-                    text-decoration: none;
                     display: flex;
                     align-items: center;
                     gap: 7px;
                     height: 100%;
+                }
+
+                >a,
+                >span,
+                >div button {
+                    text-decoration: none;
+                    color: var(--color-text);
+                }
+
+                >a.active {
+                    box-shadow: inset 0px -2px 0px 0px var(--color-primary);
                 }
 
                 button {

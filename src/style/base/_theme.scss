@@ -1,0 +1,25 @@
+// Light Mode
+:root {
+    --color-primary: #{$color-primary-light};
+    --color-background: #{$color-background-light};
+    --color-text: #{$color-text-light};
+    --color-cta: #{$color-cta-light};
+    --color-cta-shadow: #{$color-cta-shadow-light};
+    --color-component: #{$color-component-light};
+    --color-component-border: #{$color-component-border-light};
+    --color-component-text: #{$color-component-text-light};
+    --color-navigation-separator: #{$color-navigation-separator-light};
+}
+
+// Dark Mode
+[data-theme="dark"] {
+    --color-primary: #{$color-primary-dark};
+    --color-background: #{$color-background-dark};
+    --color-text: #{$color-text-dark};
+    --color-cta: #{$color-cta-dark};
+    --color-cta-shadow: #{$color-cta-shadow-dark};
+    --color-component: #{$color-component-dark};
+    --color-component-border: #{$color-component-border-dark};
+    --color-component-text: #{$color-component-text-dark};
+    --color-navigation-separator: #{$color-navigation-separator-dark};
+}

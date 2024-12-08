@@ -1,0 +1,19 @@
+.dash-layout {
+    display: flex;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    aside {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 20px;
+    }
+}

@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <div className="container">
-      <header>
+      <header className="component-shadow">
         <span className="logo">Amply</span>
         <nav>
           <ul>

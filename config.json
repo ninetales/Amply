@@ -1,0 +1,17 @@
+{
+    "source": [
+        "src/style/tokens/**/*.json"
+    ],
+    "platforms": {
+        "scss": {
+            "transformGroup": "scss",
+            "buildPath": "src/style/abstract/",
+            "files": [
+                {
+                    "destination": "_variables.scss",
+                    "format": "scss/variables"
+                }
+            ]
+        }
+    }
+}

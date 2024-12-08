@@ -8,36 +8,26 @@ export const UserProvider = ({ children }) => {
     walletAddress: '',
   };
   const [userData, setUserData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const accountSwitch = async () => {
-    console.log('Account switch fired...');
+  const fetchAccounts = async () => {
     try {
       const accounts = await window.ethereum.request({
         method: 'eth_accounts',
       });
-
-      if (accounts.length > 0) {
-        // User has connected accounts
-        setUserData({ isConnected: true, walletAddress: accounts[0] });
-        console.log('Account switched to:', accounts[0]);
-      } else {
-        // No accounts connected, reset to initial state
-        setUserData(initialState);
-        console.log('No accounts connected. State reset to initialState.');
-      }
+      return accounts;
     } catch (error) {
-      console.error('Error switching accounts:', error.message);
+      console.log('Error fetching accounts', error.message);
+      return [];
     }
   };
 
   const connectWallet = async () => {
-    console.log('Connecting wallet...');
-    if (window.ethereum.isMetaMask) {
+    if (window.ethereum?.isMetaMask) {
       try {
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
         });
-        console.log('the accounts', accounts);
         setUserData({ isConnected: true, walletAddress: accounts[0] });
       } catch (error) {
         console.log(`Unable to connect to MetaMask: ${error.message}`);
@@ -47,31 +37,25 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const connectionStatus = async () => {
-    console.log('Checking connection status...');
-    if (window.ethereum.isMetaMask) {
-      const accounts = await window.ethereum.request({
-        method: 'eth_accounts',
-      });
-
-      if (accounts.length > 0) {
-        const walletAddress = accounts[0];
-        setUserData({ isConnected: true, walletAddress });
-        console.log('Wallet already connected:', walletAddress);
-      } else {
-        console.log('No wallet connected. User needs to connect.');
-      }
+  const updateConnectionState = async () => {
+    setIsLoading(true);
+    const accounts = await fetchAccounts(); // Utility function
+    if (accounts.length > 0) {
+      setUserData({ isConnected: true, walletAddress: accounts[0] });
     } else {
-      console.log('MetaMask is not installed.');
+      setUserData(initialState);
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
-    connectionStatus();
+    updateConnectionState();
 
-    window.ethereum.on('accountsChanged', accountSwitch);
+    window.ethereum.on('accountsChanged', updateConnectionState);
     return () => {
-      window.ethereum.removeListener('accountsChanged', accountSwitch);
+      window.ethereum.removeListener('accountsChanged', updateConnectionState);
     };
   }, []);
 
@@ -79,6 +63,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         connectWallet,
+        isLoading,
         isConnected: userData.isConnected,
         walletAddress: userData.walletAddress,
       }}
