@@ -1,0 +1,156 @@
+{
+    "color": {
+        "primary": {
+            "light": {
+                "value": "#00bcd4"
+            },
+            "dark": {
+                "value": "#00bcd4"
+            }
+        },
+        "background": {
+            "light": {
+                "value": "#f9fafb"
+            },
+            "dark": {
+                "value": "#121212"
+            }
+        },
+        "text": {
+            "light": {
+                "value": "#000"
+            },
+            "dark": {
+                "value": "#fff"
+            }
+        },
+        "cta": {
+            "light": {
+                "value": "#f7fdff"
+            },
+            "dark": {
+                "value": "#232425"
+            }
+        },
+        "cta-shadow": {
+            "light": {
+                "value": "#e2f1f9"
+            },
+            "dark": {
+                "value": "#000"
+            }
+        },
+        "component": {
+            "light": {
+                "value": "#fff"
+            },
+            "dark": {
+                "value": "#1b1b1b"
+            }
+        },
+        "component-border": {
+            "light": {
+                "value": "#eee"
+            },
+            "dark": {
+                "value": "#000"
+            }
+        },
+        "component-border-selected": {
+            "light": {
+                "value": "#4d8cbb"
+            },
+            "dark": {
+                "value": "#4d8cbb"
+            }
+        },
+        "component-text": {
+            "light": {
+                "value": "#646464"
+            },
+            "dark": {
+                "value": "#646464"
+            }
+        },
+        "navigation-separator": {
+            "light": {
+                "value": "#eee"
+            },
+            "dark": {
+                "value": "#232323"
+            }
+        },
+        "notification-success-background": {
+            "light": {
+                "value": "#dffbe7"
+            },
+            "dark": {
+                "value": "#001a08"
+            }
+        },
+        "notification-success-border": {
+            "light": {
+                "value": "#23a046"
+            },
+            "dark": {
+                "value": "#23a046"
+            }
+        },
+        "notification-success-text": {
+            "light": {
+                "value": "#00460d"
+            },
+            "dark": {
+                "value": "#fff"
+            }
+        },
+        "notification-error-background": {
+            "light": {
+                "value": "#fff2f2"
+            },
+            "dark": {
+                "value": "#3b0000"
+            }
+        },
+        "notification-error-border": {
+            "light": {
+                "value": "#db1a25"
+            },
+            "dark": {
+                "value": "#db1a25"
+            }
+        },
+        "notification-error-text": {
+            "light": {
+                "value": "#980f0f"
+            },
+            "dark": {
+                "value": "#fff"
+            }
+        },
+        "notification-info-background": {
+            "light": {
+                "value": "#eef5ff"
+            },
+            "dark": {
+                "value": "#020e20"
+            }
+        },
+        "notification-info-border": {
+            "light": {
+                "value": "#023fcd"
+            },
+            "dark": {
+                "value": "#023fcd"
+            }
+        },
+        "notification-info-text": {
+            "light": {
+                "value": "#314a90"
+            },
+            "dark": {
+                "value": "#fff"
+            }
+        }
+    }
+}

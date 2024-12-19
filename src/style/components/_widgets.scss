@@ -1,0 +1,63 @@
+.widget {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--color-component);
+    border: 1px solid var(--color-component-border);
+    position: relative;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        text-align: left;
+        font-size: 15px;
+        color: #404152;
+        position: absolute;
+        z-index: 1;
+    }
+
+    &__content {
+        padding: 15px 0;
+    }
+}
+
+
+.widget-balance {
+    text-align: center;
+    width: 100%;
+    width: 200px;
+    height: 200px;
+
+    &__content {
+        height: 100%;
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__numbers {
+        font-size: 35px;
+    }
+
+    &__currency {
+        text-transform: capitalize;
+    }
+}
+
+.widget-grid-status {
+    width: 100%;
+    width: 200px;
+    height: 200px;
+
+    &__content {
+        height: 100%;
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

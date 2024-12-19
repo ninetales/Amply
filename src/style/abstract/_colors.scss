@@ -1,0 +1,52 @@
+:root {
+    --background-color: #{$color-background-light};
+    --text-color: #{$color-text-light};
+
+    // Components
+    --component-color: #{$color-component-light};
+    --component-color-border: #{$color-component-border-light};
+    --component-color-border-selected: #{$color-component-border-selected-light};
+    --component-color-text: #{$color-component-text-light};
+
+    // Notifications
+    --notification-color-success-background: #{$color-notification-success-background-light};
+    --notification-color-success-border: #{$color-notification-success-border-light};
+    --notification-color-success-test: #{$color-notification-success-text-light};
+
+    --notification-color-error-background: #{$color-notification-error-background-light};
+    --notification-color-error-border: #{$color-notification-error-border-light};
+    --notification-color-error-text: #{$color-notification-error-text-light};
+
+    --notification-color-info-background: #{$color-notification-info-background-light};
+    --notification-color-info-border: #{$color-notification-info-border-light};
+    --notification-color-info-text: #{$color-notification-info-text-light};
+}
+
+[data-theme="dark"] {
+    --background-color: #{$color-background-dark};
+    --text-color: #{$color-text-dark};
+
+    // Components
+    --component-color: #{$color-component-dark};
+    --component-color-border: #{$color-component-border-dark};
+    --component-color-border-selected: #{$color-component-border-selected-dark};
+    --component-color-text: #{$color-component-text-dark};
+
+    // Notifications
+    --notification-color-success-background: #{$color-notification-success-background-dark};
+    --notification-color-success-border: #{$color-notification-success-border-dark};
+    --notification-color-success-test: #{$color-notification-success-text-dark};
+
+    --notification-color-error-background: #{$color-notification-error-background-dark};
+    --notification-color-error-border: #{$color-notification-error-border-dark};
+    --notification-color-error-text: #{$color-notification-error-text-dark};
+
+    --notification-color-info-background: #{$color-notification-info-background-dark};
+    --notification-color-info-border: #{$color-notification-info-border-dark};
+    --notification-color-info-text: #{$color-notification-info-text-dark};
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}

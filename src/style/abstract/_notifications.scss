@@ -1,0 +1,26 @@
+.notification {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    border-radius: 7px;
+    border: 1px solid;
+
+    &-success {
+        background-color: var(--notification-color-success-background);
+        border-color: var(--notification-color-success-border);
+        color: var(--notification-color-success-text);
+    }
+
+    &-info {
+        background-color: var(--notification-color-info-background);
+        border-color: var(--notification-color-info-border);
+        color: var(--notification-color-info-text);
+    }
+
+    &-error {
+        background-color: var(--notification-color-error-background);
+        border-color: var(--notification-color-error-border);
+        color: var(--notification-color-error-text);
+    }
+}
