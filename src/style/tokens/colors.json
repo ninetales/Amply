@@ -151,6 +151,30 @@
             "dark": {
                 "value": "#fff"
             }
+        },
+        "button": {
+            "light": {
+                "value": "#fff"
+            },
+            "dark": {
+                "value": "#01305b"
+            }
+        },
+        "button-text": {
+            "light": {
+                "value": "#000"
+            },
+            "dark": {
+                "value": "#fff"
+            }
+        },
+        "button-border": {
+            "light": {
+                "value": "#023fcd"
+            },
+            "dark": {
+                "value": "#00b9ff"
+            }
         }
     }
 }

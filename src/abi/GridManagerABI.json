@@ -150,6 +150,19 @@
         "type": "event"
     },
     {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            }
+        ],
+        "name": "UserRemovedFromGrid",
+        "type": "event"
+    },
+    {
         "stateMutability": "nonpayable",
         "type": "fallback"
     },
@@ -425,6 +438,13 @@
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "removeUserFromGrid",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {

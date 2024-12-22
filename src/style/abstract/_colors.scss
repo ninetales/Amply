@@ -2,6 +2,11 @@
     --background-color: #{$color-background-light};
     --text-color: #{$color-text-light};
 
+    // Buttons
+    --button-color: #{$color-button-light};
+    --button-color-text: #{$color-button-text-light};
+    --button-color-border: #{$color-button-border-light};
+
     // Components
     --component-color: #{$color-component-light};
     --component-color-border: #{$color-component-border-light};
@@ -25,6 +30,11 @@
 [data-theme="dark"] {
     --background-color: #{$color-background-dark};
     --text-color: #{$color-text-dark};
+
+    // Buttons
+    --button-color: #{$color-button-dark};
+    --button-color-text: #{$color-button-text-dark};
+    --button-color-border: #{$color-button-border-dark};
 
     // Components
     --component-color: #{$color-component-dark};

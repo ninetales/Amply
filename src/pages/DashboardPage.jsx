@@ -5,11 +5,13 @@ import { GridManagerStatusWidget } from '../components/widgets/GridManagerStatus
 
 const DashboardPage = () => {
   return (
-    <div>
-      <BalanceWidget />
-      <GridManagerStatusWidget />
+    <>
+      <div className="dashboard-grid">
+        <BalanceWidget />
+        <GridManagerStatusWidget />
+      </div>
       <GridManager />
-    </div>
+    </>
   );
 };
 

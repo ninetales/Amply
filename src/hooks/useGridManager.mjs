@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import UserContext from '../context/UserContext';
 import config from '../../config.mjs';
 import GridManagerABI from '../abi/GridManagerABI.json';
+import { createContract } from '../utilities/web3Handler.mjs';
 
 const useGridManager = () => {
     const { signer } = useContext(UserContext);
@@ -20,7 +21,7 @@ const useGridManager = () => {
         }
 
         try {
-            return new ethers.Contract(address, GridManagerABI, signer);
+            return createContract(address, GridManagerABI, signer);
         } catch (error) {
             console.error("Error creating contract:", error);
             return null;

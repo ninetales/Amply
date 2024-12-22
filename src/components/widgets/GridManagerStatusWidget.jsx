@@ -1,42 +1,30 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { MapPinXmark, User } from 'iconoir-react';
+import { MapPinXmark, MapPin, User } from 'iconoir-react';
 import { PuffLoader } from 'react-spinners';
 import useGridManager from '../../hooks/useGridManager.mjs';
 import UserContext from '../../context/UserContext';
 
 export const GridManagerStatusWidget = () => {
-  const { walletAddress } = useContext(UserContext);
-  const { gridManagerContract } = useGridManager();
+  const { gridData } = useContext(UserContext);
   const [isConnected, setIsConnected] = useState(null);
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const status = await gridManagerContract.isUserConnected(walletAddress);
-        setIsConnected(status);
-      } catch (error) {
-        if (error.message?.includes('NoUserInGrid')) {
-          setIsConnected(false);
-        } else {
-          // Handle other unexpected errors
-          console.error('Unexpected error:', error.message || error);
-        }
-      }
-    };
-    fetchStatus();
-  }, [isConnected]);
 
   return (
     <div className="widget widget-grid-status component-shadow">
       <div className="widget__header">
-        <MapPinXmark />
+        {gridData ? <MapPin /> : <MapPinXmark />}
         <span>Grid status</span>
       </div>
       <div className="widget__content widget-grid-status__content">
-        {isConnected === null ? (
+        {gridData === null ? (
           <PuffLoader />
-        ) : isConnected ? (
-          'Connected'
+        ) : gridData ? (
+          <>
+            <span
+              className={`fi fi-${gridData.countryCode.toLowerCase()}`}
+            ></span>
+
+            <span>{gridData.name}</span>
+          </>
         ) : (
           <>
             <span>Not connected</span>

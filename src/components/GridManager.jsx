@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useGridManager from '../hooks/useGridManager.mjs';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import gridManagerSchema from '../validation/schemas/gridManagerSchema';
+import { ClipLoader } from 'react-spinners';
+import { MapPin, HomeAlt } from 'iconoir-react';
 
 export const GridManager = () => {
   const { gridManagerContract } = useGridManager();
@@ -30,10 +31,11 @@ export const GridManager = () => {
   useEffect(() => {
     const fetchGrids = async () => {
       try {
-        const grids = await gridManagerContract.listGrids();
-        setGrids(grids);
+        const response = await gridManagerContract.listGrids();
+        setGrids(response);
       } catch (error) {
         console.log('No grids to load...');
+        setFeedback({ message: 'No grids to load.', type: 'info' });
       }
     };
     fetchGrids();
@@ -41,12 +43,44 @@ export const GridManager = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log('Submit', data);
+      console.log('Submit', data.radio);
 
-      // Your submission logic here
-      setFeedback({ message: 'Grid connected successfully!', type: 'success' });
+      const txResponse = await gridManagerContract.addUserToGrid(data.radio);
+      const receipt = await txResponse.wait();
+
+      if (receipt.status !== 1)
+        setFeedback({ message: 'Transaction failed.', type: 'error' });
+
+      receipt.logs.forEach((log) => {
+        try {
+          const parsedLog = gridManagerContract.interface.parseLog(log);
+          console.log('Event:', parsedLog);
+        } catch (e) {
+          console.log('Failed to parse log:', log);
+        }
+      });
+
+      setFeedback({
+        message: 'Successfully connected to grid.',
+        type: 'success',
+      });
     } catch (error) {
-      setFeedback({ message: 'Error connecting to grid.', type: 'error' });
+      // Check for specific custom error
+      if (error.code === 'CALL_EXCEPTION' && error.data) {
+        try {
+          const errorData = gridManagerContract.interface.parseError(
+            error.data
+          );
+          if (errorData.name === 'UserAlreadyInGrid') {
+            setFeedback({
+              message: 'You are already connected to a grid.',
+              type: 'error',
+            });
+          }
+        } catch (parseError) {
+          setFeedback({ message: 'Error connecting to grid.', type: 'error' });
+        }
+      }
     }
   };
 
@@ -60,10 +94,8 @@ export const GridManager = () => {
 
   return (
     <div className="grid-manager">
-      <h2>Grid Manager</h2>
+      <h3>Available Grids:</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h3>Available Grids:</h3>
-
         <div className="form__header">
           {feedback.message && (
             <div className={`notification notification-${feedback.type}`}>
@@ -94,12 +126,18 @@ export const GridManager = () => {
                           field.onChange(e);
                           handleOptionChange(e);
                         }}
+                        disabled={isSubmitting}
                       />
                       <span
                         className={`fi fi-${grid.countryCode.toLowerCase()}`}
                       ></span>
                       <span>{grid.countryName}</span>
-                      <span>Area: {grid.name}</span>
+                      <ul className="grid-manager__details-list">
+                        <li>{`Location: ${grid.name}`}</li>
+                        <li>
+                          {`Connected users: ${grid.userCount.toString()}`}
+                        </li>
+                      </ul>
                     </label>
                   </li>
                 ))
@@ -110,7 +148,7 @@ export const GridManager = () => {
           <p>No grids found.</p>
         )}
         <button type="submit" disabled={isSubmitting}>
-          Connect to grid
+          {isSubmitting ? <ClipLoader /> : 'Connect to grid'}
         </button>
       </form>
     </div>

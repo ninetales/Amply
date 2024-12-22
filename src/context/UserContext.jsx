@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import config from '../../config.mjs';
+import { createContract } from '../utilities/web3Handler.mjs';
+import GridManagerABI from '../abi/GridManagerABI.json';
 
 const UserContext = createContext();
 
@@ -8,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const initialState = {
     isConnected: false,
     walletAddress: '',
-    gridData: {},
+    gridData: null,
   };
   const [userData, setUserData] = useState(initialState);
   const [browserProvider, setBrowserProvider] = useState(null);
@@ -50,7 +52,7 @@ export const UserProvider = ({ children }) => {
 
   const updateConnectionState = async () => {
     setIsLoading(true);
-    const accounts = await fetchAccounts(); // Utility function
+    const accounts = await fetchAccounts();
     if (accounts.length > 0) {
       setUserData({ isConnected: true, walletAddress: accounts[0] });
     } else {
@@ -89,6 +91,44 @@ export const UserProvider = ({ children }) => {
     }
   }, [userData.isConnected]);
 
+  useEffect(() => {
+    const gridContract = async () => {
+      const { address } = config.contracts.gridManager;
+      const gridManagerContract = createContract(
+        address,
+        GridManagerABI,
+        signer
+      );
+
+      try {
+        const response = await gridManagerContract.getUserGridData(
+          userData.walletAddress
+        );
+
+        const [gridId, name, countryCode, countryName, userCount, createdBy] =
+          response;
+
+        setUserData((prevData) => ({
+          ...prevData,
+          gridData: {
+            gridId: gridId.toString(),
+            name,
+            countryCode,
+            countryName,
+            userCount: Number(userCount),
+            createdBy,
+          },
+        }));
+      } catch (error) {
+        console.error('Unexpected error:', error.message || error);
+      }
+    };
+
+    if (userData?.walletAddress && signer) {
+      gridContract();
+    }
+  }, [userData?.walletAddress, signer]);
+
   return (
     <UserContext.Provider
       value={{
@@ -96,6 +136,7 @@ export const UserProvider = ({ children }) => {
         isLoading,
         isConnected: userData.isConnected,
         walletAddress: userData.walletAddress,
+        gridData: userData.gridData,
         browserProvider,
         infuraProvider,
         signer,
