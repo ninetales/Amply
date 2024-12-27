@@ -6,6 +6,7 @@ import { parseUnits } from 'ethers';
 import { useForm } from 'react-hook-form';
 import tradeSchema from '../validation/schemas/tradeSchema.mjs';
 import { ClipLoader } from 'react-spinners';
+import { WateringSoil, Wind, SunLight } from 'iconoir-react';
 
 export const CreateTrade = () => {
   const { tradingContract } = useTrading();
@@ -16,16 +17,13 @@ export const CreateTrade = () => {
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: { kWh: '', sourceTypes: [] },
     resolver: yupResolver(tradeSchema),
   });
-
-  // Watch sourceTypes changes
-  const selectedSourceTypes = watch('sourceTypes') || [];
 
   const onSubmit = async (data) => {
     const formattedData = {
@@ -65,6 +63,9 @@ export const CreateTrade = () => {
         message: 'Successfully created the offer.',
         type: 'success',
       });
+
+      // Reset the form
+      reset();
     } catch (error) {
       // Check for specific custom error
       if (error.code === 'CALL_EXCEPTION' && error.data) {
@@ -122,9 +123,24 @@ export const CreateTrade = () => {
     fetchTypes();
   }, [tradingContract]);
 
+  const sourceIcons = (name) => {
+    switch (name.toLowerCase()) {
+      case 'wind':
+        return <Wind />;
+      case 'solar':
+        return <SunLight />;
+      case 'water':
+        return <WateringSoil />;
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="trade-creator  component-shadow"
+    >
       <div className="form__header">
+        <h2>New offer</h2>
         {feedback.message && (
           <div className={`notification notification-${feedback.type}`}>
             {feedback.message}
@@ -133,24 +149,32 @@ export const CreateTrade = () => {
       </div>
       <span>Flat rate: 0.001 ETH/kWh</span>
       <label>
-        <span>Amount kWh</span>
+        <span>Amount kWh:</span>
         <input type="text" {...register('kWh')} disabled={isSubmitting} />
         {errors.kWh && (
           <span className="form-message">{errors.kWh.message}</span>
         )}
       </label>
 
-      {sourceTypeOptions.map((sourceType) => (
-        <label key={sourceType.id}>
-          <input
-            type="checkbox"
-            {...register('sourceTypes')}
-            value={Number(sourceType.id)}
-            disabled={isSubmitting}
-          />
-          <span>{sourceType.name}</span>
-        </label>
-      ))}
+      <div className="trade-creator__section">
+        <span>Source type options:</span>
+        <div className="source-options">
+          {sourceTypeOptions.map((sourceType) => (
+            <label key={sourceType.id} className="source-options__button">
+              <input
+                type="checkbox"
+                {...register('sourceTypes')}
+                value={Number(sourceType.id)}
+                disabled={isSubmitting}
+              />
+              <div className="source-options__icon">
+                {sourceIcons(sourceType.name)}
+                <span>{sourceType.name}</span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
 
       {errors.sourceTypes && (
         <span className="form-message">{errors.sourceTypes.message}</span>
