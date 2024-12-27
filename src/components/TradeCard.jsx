@@ -14,6 +14,7 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const { tradingContract } = useTrading();
   const { gridId, kWh, pricePerKWh, tradeId, seller, sourceTypeIds } = data;
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
+  const [isCanceled, setIsCanceled] = useState(false);
 
   const {
     handleSubmit,
@@ -23,7 +24,7 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const onSubmit = async (data) => {
     console.log('card data', data);
     if (seller.toLowerCase() === walletAddress) {
-      //await cancelTrade();
+      await cancelTrade();
     } else {
       await buyTrade();
     }
@@ -87,7 +88,13 @@ export const TradeCard = ({ data, updateTradeList }) => {
                 type: 'error',
               });
             }
-          } catch (error) {}
+          } catch (parseError) {
+            console.log(parseError.data);
+            setFeedback({
+              message: 'Ops...Something went wrong.',
+              type: 'error',
+            });
+          }
         }
       }
     }
@@ -96,18 +103,77 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const cancelTrade = async () => {
     console.log('Cancel trade!');
     try {
-      const response = await tradingContract.cancelTrade(gridId, tradeId);
-      console.log('cancel res', response);
+      const txResponse = await tradingContract.cancelTrade(gridId, tradeId);
+
+      const receipt = await txResponse.wait();
+
+      if (receipt.status !== 1)
+        setFeedback({
+          message:
+            'Was unable to complete to cancel the trade. Please try again later.',
+          type: 'error',
+        });
+
+      receipt.logs.forEach((log) => {
+        try {
+          const parsedLog = tradingContract.interface.parseLog(log);
+          console.log('Event:', parsedLog);
+        } catch (e) {
+          console.log('Failed to parse log:', log);
+        }
+      });
+
+      setFeedback({
+        message: 'Successfully canceled the offer',
+        type: 'success',
+      });
+
+      setIsCanceled(true);
+
+      setTimeout(() => {
+        updateTradeList();
+      }, 1500);
     } catch (error) {
       if (error.code === 'CALL_EXCEPTION' && error.data) {
         try {
           const errorData = tradingContract.interface.parseError(error.data);
           console.log('errordata', errorData);
+          if (errorData.name === 'UnauthorizedAccess') {
+            setFeedback({
+              message: 'Ops! You are not authorized to cancel this trade.',
+              type: 'error',
+            });
+          } else if (errorData.name === 'TradeIsInactive') {
+            setFeedback({
+              message: 'Ops! The trade is no longer active.',
+              type: 'error',
+            });
+          }
         } catch (parseError) {
-          console.log('parseerror', error);
+          console.log(parseError.data);
+          setFeedback({
+            message: 'Ops...Something went wrong.',
+            type: 'error',
+          });
         }
       }
     }
+  };
+
+  const getButtonText = () => {
+    if (isSubmitting) {
+      return <ClipLoader />;
+    }
+
+    if (isPurchaseComplete) {
+      return 'Trade Complete';
+    }
+
+    if (isCanceled) {
+      return 'Trade Canceled';
+    }
+
+    return seller.toLowerCase() === walletAddress ? 'Cancel Trade' : 'Purchase';
   };
 
   return (
@@ -128,18 +194,11 @@ export const TradeCard = ({ data, updateTradeList }) => {
           {ethers.formatEther((BigInt(kWh) * BigInt(pricePerKWh)).toString())}{' '}
           ETH
         </span>
-        <button type="submit" disabled={isSubmitting || isPurchaseComplete}>
-          {isSubmitting ? (
-            <ClipLoader />
-          ) : !isPurchaseComplete ? (
-            seller.toLowerCase() === walletAddress ? (
-              'Cancel Trade'
-            ) : (
-              'Buy'
-            )
-          ) : (
-            'Purchased'
-          )}
+        <button
+          type="submit"
+          disabled={isSubmitting || isPurchaseComplete || isCanceled}
+        >
+          {getButtonText()}
         </button>
       </form>
     </div>

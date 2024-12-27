@@ -98,14 +98,6 @@ export const CreateTrade = () => {
     }
   };
 
-  const handleCheckboxChange = (id) => {
-    setSelectedSourceTypes((prev) =>
-      prev.includes(Number(id))
-        ? prev.filter((type) => type !== Number(id))
-        : [...prev, Number(id)]
-    );
-  };
-
   useEffect(() => {
     const fetchTypes = async () => {
       const types = [];
