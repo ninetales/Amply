@@ -3,7 +3,7 @@ import useGridManager from '../hooks/useGridManager.mjs';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import gridManagerSchema from '../validation/schemas/gridManagerSchema';
+import gridManagerSchema from '../validation/schemas/gridManagerSchema.mjs';
 import { ClipLoader } from 'react-spinners';
 import { MapPin, HomeAlt } from 'iconoir-react';
 

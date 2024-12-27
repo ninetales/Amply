@@ -89,7 +89,7 @@ export const UserProvider = ({ children }) => {
         console.error('Error initializing signer', error);
       }
     }
-  }, [userData.isConnected]);
+  }, [userData.isConnected, userData.walletAddress]);
 
   useEffect(() => {
     const gridContract = async () => {
@@ -142,6 +142,7 @@ export const UserProvider = ({ children }) => {
         signer,
       }}
     >
+      {console.log('Grid Data:', userData.gridData)}
       {children}
     </UserContext.Provider>
   );
