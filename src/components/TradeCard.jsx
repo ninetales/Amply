@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
 import useTrading from '../hooks/useTrading.mjs';
-import useEnergyStorage from '../hooks/useEnergyStorage.mjs';
 import { ethers } from 'ethers';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
+import { WateringSoil, Wind, SunLight } from 'iconoir-react';
 
 export const TradeCard = ({ data, updateTradeList }) => {
   const [feedback, setFeedback] = useState('');
@@ -15,6 +14,7 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const { gridId, kWh, pricePerKWh, tradeId, seller, sourceTypeIds } = data;
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
   const [isCanceled, setIsCanceled] = useState(false);
+  const [sourceTypeOptions, setSourceTypeOptions] = useState([]);
 
   const {
     handleSubmit,
@@ -176,8 +176,52 @@ export const TradeCard = ({ data, updateTradeList }) => {
     return seller.toLowerCase() === walletAddress ? 'Cancel Trade' : 'Purchase';
   };
 
+  useEffect(() => {
+    const fetchTypes = async () => {
+      const formattedData = Array.isArray(sourceTypeIds)
+        ? data.sourceTypeIds.map(Number)
+        : [];
+
+      const types = [];
+      let index = 1;
+      while (true) {
+        try {
+          const response = await tradingContract.getSourceType(index);
+          if (!response.name) break;
+          types.push({
+            id: index,
+            name: response.name,
+            description: response.description,
+          });
+          index++;
+        } catch (error) {
+          break;
+        }
+      }
+
+      const filteredTypes = types.filter((type) =>
+        formattedData.includes(type.id)
+      );
+
+      setSourceTypeOptions(filteredTypes);
+    };
+
+    fetchTypes();
+  }, [sourceTypeIds, tradingContract]);
+
+  const sourceIcons = (name) => {
+    switch (name.toLowerCase()) {
+      case 'wind':
+        return <Wind />;
+      case 'solar':
+        return <SunLight />;
+      case 'water':
+        return <WateringSoil />;
+    }
+  };
+
   return (
-    <div className="trade-card">
+    <div className="trade-card component-shadow">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form__header">
           {feedback.message && (
@@ -189,6 +233,17 @@ export const TradeCard = ({ data, updateTradeList }) => {
         <span className={`fi fi-${gridData.countryCode.toLowerCase()}`} />
         <span>Area: {gridData.name}</span>
         <span>kWh: {kWh}</span>
+        <div className="trade-card__section">
+          <span>Type of source:</span>
+          <ul className="trade-card__sources">
+            {sourceTypeOptions.map((sourceType, index) => (
+              <li key={index}>
+                {sourceIcons(sourceType.name)}
+                {sourceType.name}
+              </li>
+            ))}
+          </ul>
+        </div>
         <span>
           Price:{' '}
           {ethers.formatEther((BigInt(kWh) * BigInt(pricePerKWh)).toString())}{' '}

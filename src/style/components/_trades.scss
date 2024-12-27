@@ -1,4 +1,35 @@
-.trades {}
+.trade-card {
+    background-color: var(--color-component);
+    border: 1px solid var(--color-component-border);
+    padding: 20px;
+    border-radius: 7px;
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    &__sources {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            gap: 5px;
+            padding: 5px;
+            border: 1px solid var(--color-component-border);
+        }
+    }
+}
 
 .trade-creator {
     padding: 20px;
@@ -20,7 +51,7 @@
         input[type="text"] {
             height: 40px;
             border-radius: 5px;
-            border: 1px solid;
+            border: 1px solid var(--color-component-border);
             padding: 0 10px;
         }
     }
@@ -36,7 +67,7 @@
                 display: none;
 
                 +.source-options__icon {
-                    border: 1px solid;
+                    border: 1px solid var(--color-component-border);
                     border-radius: 5px;
                     padding: 20px 0;
                 }

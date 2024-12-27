@@ -28,7 +28,6 @@ export const GridManagerStatusWidget = () => {
         ) : (
           <>
             <span>Not connected</span>
-            <button>Join grid</button>
           </>
         )}
       </div>

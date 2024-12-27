@@ -14,10 +14,7 @@ export const EnergyStorageWidget = () => {
     e.preventDefault();
     console.log('FETCHING...');
     try {
-      const response = await energyStorageContract.addEnergy(
-        walletAddress,
-        200
-      );
+      const response = await energyStorageContract.addEnergy(walletAddress, 20);
       console.log('THE RESPONSE', response);
     } catch (error) {
       console.log('the error', error);
@@ -54,7 +51,7 @@ export const EnergyStorageWidget = () => {
         manual intervention.
       </p>
       <form action="" onSubmit={(e) => handleSubmit(e)}>
-        <button>Add 200 kWh</button>
+        <button>Add 20 kWh</button>
       </form>
     </div>
   );
