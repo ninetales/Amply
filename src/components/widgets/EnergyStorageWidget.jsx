@@ -16,7 +16,7 @@ export const EnergyStorageWidget = () => {
     try {
       const response = await energyStorageContract.addEnergy(
         walletAddress,
-        250
+        200
       );
       console.log('THE RESPONSE', response);
     } catch (error) {
@@ -41,14 +41,21 @@ export const EnergyStorageWidget = () => {
   }, [walletAddress]);
 
   return (
-    <>
-      <div>
-        <span>User energy</span>
-        <span>{userEnergy}</span>
-      </div>
+    <div className="widget-energy component-shadow">
+      <h2>
+        <span>Battery storage: </span>
+        <span>{userEnergy} kWh</span>
+      </h2>
+      <p>
+        As part of this concept, we will simulate electricity storage to
+        demonstrate how energy could be managed in a decentralized system. In
+        real life, this process would be automated by an IoT device, seamlessly
+        tracking energy levels and enabling efficient usage or trade without
+        manual intervention.
+      </p>
       <form action="" onSubmit={(e) => handleSubmit(e)}>
-        <button>Add electricity</button>
+        <button>Add 200 kWh</button>
       </form>
-    </>
+    </div>
   );
 };

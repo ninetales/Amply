@@ -4,9 +4,9 @@ import { EnergyStorageWidget } from '../components/widgets/EnergyStorageWidget';
 
 export const SellPage = () => {
   return (
-    <div>
-      <EnergyStorageWidget />
+    <div className="sales-grid">
       <CreateTrade />
+      <EnergyStorageWidget />
     </div>
   );
 };
