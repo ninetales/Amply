@@ -68,33 +68,31 @@ export const TradeCard = ({ data, updateTradeList }) => {
       }, 1500);
     } catch (error) {
       if (error.code === 'CALL_EXCEPTION' && error.data) {
-        if (error.code === 'CALL_EXCEPTION' && error.data) {
-          try {
-            const errorData = tradingContract.interface.parseError(error.data);
-            console.log('ERROR DATA', errorData);
-            if (errorData.name === 'TradeIsInactive') {
-              setFeedback({
-                message: 'The offer is no longer available.',
-                type: 'error',
-              });
-            } else if (errorData.name === 'IncorrectPayment') {
-              setFeedback({
-                message: 'Incorrect payment. Please try again.',
-                type: 'error',
-              });
-            } else if (errorData.name === 'TransferFailed') {
-              setFeedback({
-                message: 'The transfer failed.',
-                type: 'error',
-              });
-            }
-          } catch (parseError) {
-            console.log(parseError.data);
+        try {
+          const errorData = tradingContract.interface.parseError(error.data);
+          console.log('ERROR DATA', errorData);
+          if (errorData.name === 'TradeIsInactive') {
             setFeedback({
-              message: 'Ops...Something went wrong.',
+              message: 'The offer is no longer available.',
+              type: 'error',
+            });
+          } else if (errorData.name === 'IncorrectPayment') {
+            setFeedback({
+              message: 'Incorrect payment. Please try again.',
+              type: 'error',
+            });
+          } else if (errorData.name === 'TransferFailed') {
+            setFeedback({
+              message: 'The transfer failed.',
               type: 'error',
             });
           }
+        } catch (parseError) {
+          console.log(parseError.data);
+          setFeedback({
+            message: 'Ops...Something went wrong.',
+            type: 'error',
+          });
         }
       }
     }
