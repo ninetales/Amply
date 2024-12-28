@@ -44,4 +44,6 @@ Follow these steps to set up the project locally:
 + MetaMask extension installed in your browser
 
 1. Clone the repository:
-```git clone https://github.com/ninetales/Amply```
+```
+git clone https://github.com/ninetales/Amply
+```
