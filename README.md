@@ -8,29 +8,29 @@ Amply is a decentralized energy marketplace designed to empower households and s
 + Decentralized Energy Marketplace<br>
 Enables peer-to-peer trading of renewable energy using blockchain technology.
 
-+ Local Grid Connections
++ Local Grid Connections<br>
 Users can connect to specific local grids, simulating real-world energy distribution networks.
 
-+ Energy Storage Management
++ Energy Storage Management<br>
 Tracks users' energy supply (e.g., kWh) and allows them to sell their energy.
 
-+ Custom Pricing
++ Custom Pricing<br>
 Currently pricing is based on a flat rate. However, the system has been designed to handle custom pricing in the future, offering flexibility and competitive rates.
 
-+ Smart Contract Execution
++ Smart Contract Execution<br>
 Facilitates secure, tamper-proof transactions between users by executing trades seamlessly once initiated by the buyer or seller.
 
-+ Scalable Grid System
++ Scalable Grid System<br>
 Supports multiple grids per region, allowing for localized energy trading networks.
 
-+ User-Friendly Interface
++ User-Friendly Interface<br>
 Provides an easy-to-use interface for wallet connection, grid selection, and trade management.
 
-+ Transparent Transactions
++ Transparent Transactions<br>
 All trades are recorded on the blockchain, ensuring transparency and trust among users.
 
-+ Eco-Friendly Focus
++ Eco-Friendly Focus<br>
 Incentivizes the production and consumption of renewable energy, contributing to sustainability goals.
 
-+ Proof-of-Concept Ready
++ Proof-of-Concept Ready<br>
 Aimed at demonstrating the viability of decentralized energy trading with a streamlined prototype.
