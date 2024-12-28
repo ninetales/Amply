@@ -1,4 +1,4 @@
-# Amply Client
+# Amply
 
 ## Description
 Amply is a decentralized energy marketplace designed to empower households and small communities to trade renewable energy directly with one another. Using blockchain technology, Amply facilitates peer-to-peer energy transactions, enabling users to connect to local grids, manage their energy supply, and use a flat rate price for trading kilowatt-hours (kWh). This innovative platform promotes energy independence, sustainable practices, and greater adoption of renewable energy sources. Amply aims to demonstrate the potential of localized, decentralized energy trading through a streamlined proof-of-concept.
@@ -34,3 +34,14 @@ Incentivizes the production and consumption of renewable energy, contributing to
 
 + Proof-of-Concept Ready<br>
 Aimed at demonstrating the viability of decentralized energy trading with a streamlined prototype.
+
+## Installation
+Follow these steps to set up the project locally:
+
+## Prerequisites
++ Node.js (version 14.x or higher)
++ npm (version 6.x or higher) or yarn (version 1.x or higher)
++ MetaMask extension installed in your browser
+
+1. Clone the repository:
+```git clone https://github.com/ninetales/Amply```
