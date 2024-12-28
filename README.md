@@ -5,7 +5,7 @@ Amply is a decentralized energy marketplace designed to empower households and s
 
 ## Features
 
-+ Decentralized Energy Marketplace
++ Decentralized Energy Marketplace<br>
 Enables peer-to-peer trading of renewable energy using blockchain technology.
 
 + Local Grid Connections
