@@ -10,7 +10,7 @@ import { WateringSoil, Wind, SunLight } from 'iconoir-react';
 
 export const CreateTrade = () => {
   const { tradingContract } = useTrading();
-  const { gridData } = useContext(UserContext);
+  const { gridData, updateEnergyStorage } = useContext(UserContext);
   const [sourceTypeOptions, setSourceTypeOptions] = useState([]);
   const [feedback, setFeedback] = useState('');
 
@@ -63,6 +63,9 @@ export const CreateTrade = () => {
         message: 'Successfully created the offer.',
         type: 'success',
       });
+
+      // Update user energy storage
+      updateEnergyStorage();
 
       // Reset the form
       reset();

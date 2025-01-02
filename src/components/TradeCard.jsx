@@ -9,7 +9,8 @@ import { WateringSoil, Wind, SunLight, User } from 'iconoir-react';
 
 export const TradeCard = ({ data, updateTradeList }) => {
   const [feedback, setFeedback] = useState('');
-  const { walletAddress, gridData } = useContext(UserContext);
+  const { walletAddress, gridData, updateEnergyStorage } =
+    useContext(UserContext);
   const { tradingContract } = useTrading();
   const { gridId, kWh, pricePerKWh, tradeId, seller, sourceTypeIds } = data;
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
@@ -65,6 +66,9 @@ export const TradeCard = ({ data, updateTradeList }) => {
       });
 
       setIsPurchaseComplete(true);
+
+      // Update user energy storage
+      updateEnergyStorage();
 
       setTimeout(() => {
         updateTradeList();
@@ -130,6 +134,9 @@ export const TradeCard = ({ data, updateTradeList }) => {
       });
 
       setIsCanceled(true);
+
+      // Update user energy storage
+      updateEnergyStorage();
 
       setTimeout(() => {
         updateTradeList();
@@ -209,7 +216,7 @@ export const TradeCard = ({ data, updateTradeList }) => {
     default: {
       type: 'submit',
       disabled: false,
-      text: isOwner ? 'Cancel offer' : 'Purchase',
+      text: isOwner ? 'Cancel offer' : 'Buy',
       classes: isOwner ? ['trade-card__cancel'] : ['trade-card__purchase'],
     },
     submitting: {

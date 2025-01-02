@@ -223,6 +223,22 @@
             "dark": {
                 "value": "#00bdd4"
             }
+        },
+        "input": {
+            "light": {
+                "value": "#fff"
+            },
+            "dark": {
+                "value": "#262626"
+            }
+        },
+        "input-text": {
+            "light": {
+                "value": "#000"
+            },
+            "dark": {
+                "value": "#fff"
+            }
         }
     }
 }

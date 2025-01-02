@@ -9,7 +9,8 @@ import { ClipLoader } from 'react-spinners';
 export const EnergyStorageWidget = () => {
   const { tradingContract } = useTrading();
   const { energyStorageContract } = useEnergyStorage();
-  const { walletAddress, gridData } = useContext(UserContext);
+  const { walletAddress, energyData, updateEnergyStorage } =
+    useContext(UserContext);
   const [userEnergy, setUserEnergy] = useState(null);
   const [feedback, setFeedback] = useState('');
 
@@ -49,7 +50,7 @@ export const EnergyStorageWidget = () => {
       });
 
       // Update users energy
-      fetchEnergy();
+      updateEnergyStorage();
     } catch (error) {
       if (error.code === 'CALL_EXCEPTION' && error.data) {
         try {
@@ -72,23 +73,6 @@ export const EnergyStorageWidget = () => {
     }
   };
 
-  const fetchEnergy = async () => {
-    try {
-      console.log('Fetching energy');
-      const response =
-        await energyStorageContract.getEnergySupply(walletAddress);
-
-      console.log('ener res', response.toString());
-      setUserEnergy(response.toString());
-    } catch (error) {
-      console.log('Unable to fetch energy', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchEnergy();
-  }, [walletAddress]);
-
   return (
     <div className="widget-energy component-shadow">
       <div>
@@ -100,7 +84,7 @@ export const EnergyStorageWidget = () => {
       </div>
       <h2>
         <span>Battery storage: </span>
-        <span>{userEnergy} kWh</span>
+        <span>{energyData} kWh</span>
       </h2>
       <p>
         As part of this concept, we will simulate electricity storage to

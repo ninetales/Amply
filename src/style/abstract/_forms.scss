@@ -2,6 +2,13 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        background-color: var(--input);
+        color: var(--input-text);
+    }
 }
 
 .form-message {

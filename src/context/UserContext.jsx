@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import config from '../../config.mjs';
 import { createContract } from '../utilities/web3Handler.mjs';
 import GridManagerABI from '../abi/GridManagerABI.json';
+import EnergyStorageABI from '../abi/EnergyStorageABI.json';
 
 const UserContext = createContext();
 
@@ -11,6 +12,7 @@ export const UserProvider = ({ children }) => {
     isConnected: false,
     walletAddress: '',
     gridData: null,
+    energyStorage: 0,
   };
   const [userData, setUserData] = useState(initialState);
   const [browserProvider, setBrowserProvider] = useState(null);
@@ -35,13 +37,40 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const updateEnergyStorage = async () => {
+    const { address } = config.contracts.energyStorage;
+    const energyStorageContract = createContract(
+      address,
+      EnergyStorageABI,
+      signer
+    );
+
+    try {
+      console.log('Fetching energy');
+      const response = await energyStorageContract.getEnergySupply(
+        userData?.walletAddress
+      );
+
+      setUserData((prevData) => ({
+        ...prevData,
+        energyStorage: parseInt(response),
+      }));
+    } catch (error) {
+      console.log('Unable to fetch energy', error);
+    }
+  };
+
   const connectWallet = async () => {
     if (window.ethereum?.isMetaMask) {
       try {
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
         });
-        setUserData({ isConnected: true, walletAddress: accounts[0] });
+        setUserData({
+          ...userData,
+          isConnected: true,
+          walletAddress: accounts[0],
+        });
       } catch (error) {
         console.log(`Unable to connect to MetaMask: ${error.message}`);
       }
@@ -54,7 +83,11 @@ export const UserProvider = ({ children }) => {
     setIsLoading(true);
     const accounts = await fetchAccounts();
     if (accounts.length > 0) {
-      setUserData({ isConnected: true, walletAddress: accounts[0] });
+      setUserData({
+        ...userData,
+        isConnected: true,
+        walletAddress: accounts[0],
+      });
     } else {
       setUserData(initialState);
       setBrowserProvider(null);
@@ -129,6 +162,12 @@ export const UserProvider = ({ children }) => {
     }
   }, [userData?.walletAddress, signer]);
 
+  useEffect(() => {
+    if (userData?.walletAddress && signer) {
+      updateEnergyStorage();
+    }
+  }, [userData?.walletAddress, signer]);
+
   return (
     <UserContext.Provider
       value={{
@@ -137,12 +176,14 @@ export const UserProvider = ({ children }) => {
         isConnected: userData.isConnected,
         walletAddress: userData.walletAddress,
         gridData: userData.gridData,
+        energyData: userData.energyStorage,
         browserProvider,
         infuraProvider,
         signer,
+        updateEnergyStorage,
       }}
     >
-      {console.log('Grid Data:', userData.gridData)}
+      {console.log('User Data:', userData)}
       {children}
     </UserContext.Provider>
   );

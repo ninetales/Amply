@@ -8,8 +8,10 @@ header {
     border-radius: 15px;
 
     .logo {
-        font-size: 20px;
+        font-size: 30px;
         margin: 0 20px;
+        font-family: "Freeman", serif;
+        color: var(--color-primary);
     }
 
     nav {

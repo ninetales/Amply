@@ -2,6 +2,10 @@
     --background-color: #{$color-background-light};
     --text-color: #{$color-text-light};
 
+    // Forms
+    --input: #{$color-input-light};
+    --input-text: #{$color-input-text-light};
+
     // Buttons
     --button-color: #{$color-button-light};
     --button-color-text: #{$color-button-text-light};
@@ -38,6 +42,10 @@
 [data-theme="dark"] {
     --background-color: #{$color-background-dark};
     --text-color: #{$color-text-dark};
+
+    // Forms
+    --input: #{$color-input-dark};
+    --input-text: #{$color-input-text-dark};
 
     // Buttons
     --button-color: #{$color-button-dark};
