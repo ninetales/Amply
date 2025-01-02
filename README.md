@@ -47,3 +47,14 @@ Follow these steps to set up the project locally:
 ```
 git clone https://github.com/ninetales/Amply
 ```
+
+2. Open the project in your text editor
+3. Open up your terminal in your text editor
+4. Install all dependencies
+```
+npm i
+```
+5. Now run the project
+```
+npm run dev
+```
