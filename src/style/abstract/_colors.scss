@@ -7,6 +7,14 @@
     --button-color-text: #{$color-button-text-light};
     --button-color-border: #{$color-button-border-light};
 
+    --button-color-cancel: #{$color-button-cancel-light};
+    --button-color-cancel-text: #{$color-button-cancel-text-light};
+    --button-color-cancel-border: #{$color-button-cancel-border-light};
+
+    --button-color-accept: #{$color-button-accept-light};
+    --button-color-accept-text: #{$color-button-accept-text-light};
+    --button-color-accept-border: #{$color-button-accept-border-light};
+
     // Components
     --component-color: #{$color-component-light};
     --component-color-border: #{$color-component-border-light};
@@ -35,6 +43,14 @@
     --button-color: #{$color-button-dark};
     --button-color-text: #{$color-button-text-dark};
     --button-color-border: #{$color-button-border-dark};
+
+    --button-color-cancel: #{$color-button-cancel-dark};
+    --button-color-cancel-text: #{$color-button-cancel-text-dark};
+    --button-color-cancel-border: #{$color-button-cancel-border-dark};
+
+    --button-color-accept: #{$color-button-accept-dark};
+    --button-color-accept-text: #{$color-button-accept-text-dark};
+    --button-color-accept-border: #{$color-button-accept-border-dark};
 
     // Components
     --component-color: #{$color-component-dark};

@@ -3,6 +3,48 @@
     border: 1px solid var(--color-component-border);
     padding: 20px;
     border-radius: 7px;
+    position: relative;
+
+    &__label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+
+        &-error {
+            background-color: #c40000;
+            padding: 5px;
+            border-radius: 3px;
+            color: #ffffff;
+        }
+    }
+
+    &__price {
+        display: flex;
+        flex-direction: column;
+
+        &-tag {
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            height: 50px;
+        }
+    }
+
+    &__cancel {
+        border-color: var(--button-color-cancel-border);
+        color: var(--button-color-cancel-text);
+        background-color: var(--button-color-cancel);
+    }
+
+    &__purchase {
+        border-color: var(--button-color-accept-border);
+        color: var(--button-color-accept-text);
+        background-color: var(--button-color-accept);
+    }
 
     &__section {
         display: flex;

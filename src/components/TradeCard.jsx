@@ -5,7 +5,7 @@ import useTrading from '../hooks/useTrading.mjs';
 import { ethers } from 'ethers';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
-import { WateringSoil, Wind, SunLight } from 'iconoir-react';
+import { WateringSoil, Wind, SunLight, User } from 'iconoir-react';
 
 export const TradeCard = ({ data, updateTradeList }) => {
   const [feedback, setFeedback] = useState('');
@@ -15,6 +15,7 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const [isPurchaseComplete, setIsPurchaseComplete] = useState(false);
   const [isCanceled, setIsCanceled] = useState(false);
   const [sourceTypeOptions, setSourceTypeOptions] = useState([]);
+  const isOwner = seller.toLowerCase() === walletAddress.toLowerCase();
 
   const {
     handleSubmit,
@@ -24,8 +25,10 @@ export const TradeCard = ({ data, updateTradeList }) => {
   const onSubmit = async (data) => {
     console.log('card data', data);
     if (seller.toLowerCase() === walletAddress) {
+      console.log('Canceleing trade...');
       await cancelTrade();
     } else {
+      console.log('Buying trade...');
       await buyTrade();
     }
   };
@@ -158,22 +161,6 @@ export const TradeCard = ({ data, updateTradeList }) => {
     }
   };
 
-  const getButtonText = () => {
-    if (isSubmitting) {
-      return <ClipLoader />;
-    }
-
-    if (isPurchaseComplete) {
-      return 'Trade Complete';
-    }
-
-    if (isCanceled) {
-      return 'Trade Canceled';
-    }
-
-    return seller.toLowerCase() === walletAddress ? 'Cancel Trade' : 'Purchase';
-  };
-
   useEffect(() => {
     const fetchTypes = async () => {
       const formattedData = Array.isArray(sourceTypeIds)
@@ -218,8 +205,46 @@ export const TradeCard = ({ data, updateTradeList }) => {
     }
   };
 
+  const buttonStates = {
+    default: {
+      type: 'submit',
+      disabled: false,
+      text: isOwner ? 'Cancel offer' : 'Purchase',
+      classes: isOwner ? ['trade-card__cancel'] : ['trade-card__purchase'],
+    },
+    submitting: {
+      type: 'submit',
+      disabled: true,
+      text: <ClipLoader />,
+    },
+    purchaseComplete: {
+      type: 'button',
+      disabled: true,
+      text: 'Purchase Complete',
+      classes: ['trade-card__purchased'],
+    },
+    canceled: {
+      type: 'button',
+      disabled: true,
+      text: 'Canceled',
+      classes: ['trade-card__canceled'],
+    },
+  };
+
+  const getButtonState = () => {
+    if (isSubmitting) return buttonStates.submitting;
+    if (isPurchaseComplete) return buttonStates.purchaseComplete;
+    if (isCanceled) return buttonStates.canceled;
+    return buttonStates.default;
+  };
+  const buttonState = getButtonState();
+
   return (
     <div className="trade-card component-shadow">
+      {isOwner && (
+        <span className="trade-card__label trade-card__label-error">Owner</span>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form__header">
           {feedback.message && (
@@ -242,16 +267,19 @@ export const TradeCard = ({ data, updateTradeList }) => {
             ))}
           </ul>
         </div>
-        <span>
-          Price:{' '}
-          {ethers.formatEther((BigInt(kWh) * BigInt(pricePerKWh)).toString())}{' '}
-          ETH
-        </span>
+        <div className="trade-card__price">
+          <span>Price:</span>
+          <span className="trade-card__price-tag">
+            {ethers.formatEther((BigInt(kWh) * BigInt(pricePerKWh)).toString())}{' '}
+            ETH
+          </span>
+        </div>
         <button
-          type="submit"
-          disabled={isSubmitting || isPurchaseComplete || isCanceled}
+          type={buttonState.type}
+          disabled={buttonState.disabled}
+          className={buttonState?.classes?.join(' ')}
         >
-          {getButtonText()}
+          {buttonState.text}
         </button>
       </form>
     </div>

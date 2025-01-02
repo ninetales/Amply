@@ -11,6 +11,7 @@ export const Trades = () => {
   const [trades, setTrades] = useState(null);
 
   const fetchTrades = async () => {
+    console.log('Time to fetch the trades again...');
     try {
       const response = await tradingContract.getActiveTrades(gridData.gridId);
 
@@ -39,7 +40,11 @@ export const Trades = () => {
   return (
     <div className="trades-grid">
       {trades?.map((trade, index) => (
-        <TradeCard data={trade} key={index} updateTradeList={fetchTrades} />
+        <TradeCard
+          data={trade}
+          key={trade.tradeId}
+          updateTradeList={fetchTrades}
+        />
       ))}
     </div>
   );

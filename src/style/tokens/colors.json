@@ -175,6 +175,54 @@
             "dark": {
                 "value": "#00b9ff"
             }
+        },
+        "button-cancel": {
+            "light": {
+                "value": "transparent"
+            },
+            "dark": {
+                "value": "transparent"
+            }
+        },
+        "button-cancel-text": {
+            "light": {
+                "value": "#c40100"
+            },
+            "dark": {
+                "value": "#c40100"
+            }
+        },
+        "button-cancel-border": {
+            "light": {
+                "value": "#c40100"
+            },
+            "dark": {
+                "value": "#c40100"
+            }
+        },
+        "button-accept": {
+            "light": {
+                "value": "transparent"
+            },
+            "dark": {
+                "value": "transparent"
+            }
+        },
+        "button-accept-text": {
+            "light": {
+                "value": "#00bdd4"
+            },
+            "dark": {
+                "value": "#00bdd4"
+            }
+        },
+        "button-accept-border": {
+            "light": {
+                "value": "#00bdd4"
+            },
+            "dark": {
+                "value": "#00bdd4"
+            }
         }
     }
 }
