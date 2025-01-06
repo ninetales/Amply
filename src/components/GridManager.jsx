@@ -64,6 +64,9 @@ export const GridManager = () => {
         message: 'Successfully connected to grid.',
         type: 'success',
       });
+
+      // Reload page
+      window.location.reload();
     } catch (error) {
       // Check for specific custom error
       if (error.code === 'CALL_EXCEPTION' && error.data) {

@@ -13,7 +13,7 @@ export const EnergyStatusWidget = () => {
         <span>Excess energy</span>
       </div>
       <div className="widget__content widget-grid-status__content">
-        {energyData === 0 ? <PuffLoader /> : <h2>{energyData} kWh</h2>}
+        {energyData === null ? <PuffLoader /> : <h2>{energyData} kWh</h2>}
       </div>
     </div>
   );

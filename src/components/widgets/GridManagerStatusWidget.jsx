@@ -16,7 +16,7 @@ export const GridManagerStatusWidget = () => {
       </div>
       <div className="widget__content widget-grid-status__content">
         {gridData === null ? (
-          <PuffLoader />
+          <span>Not connected</span>
         ) : gridData ? (
           <>
             <span
