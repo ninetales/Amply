@@ -6,9 +6,9 @@ const tradeSchema = Yup.object().shape({
     kWh: Yup.number()
         .typeError('Amount must be a number')
         .positive('Amount must be positive')
-        .integer('Amount must be a whole number')
+        .test('valid-number', 'Must be a valid whole number',
+            value => !isNaN(value) && Number.isInteger(value))
         .min(3, 'Amount must be at least 3 kWh')
-        .typeError('Amount must be a number')
         .required('Amount of kWh is required'),
     sourceTypes: Yup.array()
         .of(Yup.number())
