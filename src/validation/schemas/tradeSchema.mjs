@@ -6,6 +6,7 @@ const tradeSchema = Yup.object().shape({
     kWh: Yup.number()
         .typeError('Amount must be a number')
         .positive('Amount must be positive')
+        .integer('Amount must be a whole number')
         .min(3, 'Amount must be at least 3 kWh')
         .typeError('Amount must be a number')
         .required('Amount of kWh is required'),
